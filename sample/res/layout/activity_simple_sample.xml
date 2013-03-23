@@ -26,27 +26,34 @@
 		android:layout_height="0dp"
 		android:layout_weight="0.1" />
 
-	<ImageButton 
-		android:id="@+id/bt_icon"
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_weight="0.8"
-		android:gravity="center"
-		android:scaleType="fitCenter" />
-	
-	<TextView
+    <View
+        android:id="@+id/view_icon"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"/>
+
+    <CheckBox
+        android:id="@+id/cb_draw_stroke"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:text="Draw Stroke"/>
+
+    <TextView
 		android:id="@+id/tv_size"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginLeft="10dp"
 		android:gravity="left"
 		android:textSize="20sp"
-		android:textStyle="bold" />
+		android:textStyle="bold"
+        android:visibility="gone"/>
 
 	<SeekBar
 		android:id="@+id/sb_size"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content" />
+		android:layout_height="wrap_content"
+        android:visibility="gone"/>
 
 	<Button
 		android:id="@+id/bt_change_color"

@@ -23,15 +23,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.atermenji.android.iconictextview.IconicFontDrawable;
 import com.atermenji.android.iconictextview.icon.EntypoIcon;
@@ -45,11 +39,12 @@ public class SimpleSampleActivity extends Activity {
     private static final int ICON_SIZE_MAX = 500;
     private static final int ICON_SIZE_DEFAULT = 300;
 
-    private ImageButton mIconButton;
+    private View mIconButton;
     private Spinner mIconsSpinner;
     private SeekBar mSizeSeekBar;
     private Button mChangeColorButton;
     private TextView mCurSizeTextView;
+    private CheckBox mDrawStrokeCheckBox;
     
     private IconicFontDrawable mIconicFontDrawable;
 
@@ -60,18 +55,20 @@ public class SimpleSampleActivity extends Activity {
         setTitle("Simple Sample");
         setContentView(R.layout.activity_simple_sample);
 
-        mIconButton = (ImageButton) findViewById(R.id.bt_icon);
+        mIconButton = findViewById(R.id.view_icon);
         mIconsSpinner = (Spinner) findViewById(R.id.sp_icons);
         mSizeSeekBar = (SeekBar) findViewById(R.id.sb_size);
         mChangeColorButton = (Button) findViewById(R.id.bt_change_color);
         mCurSizeTextView = (TextView) findViewById(R.id.tv_size);
+        mDrawStrokeCheckBox = (CheckBox) findViewById(R.id.cb_draw_stroke);
 
         initSimpleSample();
     }
 
     private void initSimpleSample() {
         mIconicFontDrawable = new IconicFontDrawable(this);
-        mIconButton.setImageDrawable(mIconicFontDrawable);
+        mIconButton.setBackground(mIconicFontDrawable);
+//        mIconButton.setImageDrawable(mIconicFontDrawable);
         
         List<Icon> icons = new ArrayList<Icon>();
         icons.addAll(Arrays.asList(EntypoIcon.values()));
@@ -95,7 +92,6 @@ public class SimpleSampleActivity extends Activity {
             }
         });
         
-        mIconicFontDrawable.setIconSize(ICON_SIZE_DEFAULT);
         mIconicFontDrawable.setIconColor(Utils.randomColor());
 
         mCurSizeTextView.setText("Size: " + ICON_SIZE_DEFAULT);
@@ -111,7 +107,7 @@ public class SimpleSampleActivity extends Activity {
             }
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mIconicFontDrawable.setIconSize(progress);
+//                mIconicFontDrawable.setIconSize(progress);
                 mCurSizeTextView.setText("Size: " + progress);
             }
         });
@@ -120,6 +116,14 @@ public class SimpleSampleActivity extends Activity {
             @Override
             public void onClick(View v) {
                 mIconicFontDrawable.setIconColor(Utils.randomColor());
+                mIconicFontDrawable.setStokeColor(Utils.randomColor());
+            }
+        });
+
+        mDrawStrokeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mIconicFontDrawable.drawStroke(isChecked);
             }
         });
     }
