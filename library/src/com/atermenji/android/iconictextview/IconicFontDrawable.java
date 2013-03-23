@@ -37,7 +37,7 @@ public class IconicFontDrawable extends Drawable {
     }
 
     public void setStroke(final int strokeColor) {
-        mStrokePaint = new Paint();
+        mStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mStrokePaint.setStyle(Paint.Style.STROKE);
         mStrokePaint.setStrokeWidth(10);
         mStrokePaint.setColor(strokeColor);
@@ -176,8 +176,6 @@ public class IconicFontDrawable extends Drawable {
 
     @Override
     public void draw(Canvas canvas) {
-//        canvas.drawText(mIconUtfChars, 0, mIconUtfChars.length, 0, getBounds().height(), mStrokePaint);
-//        drawTest(canvas);
         drawWithPath(canvas);
     }
 

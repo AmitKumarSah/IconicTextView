@@ -21,6 +21,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
@@ -107,6 +108,10 @@ public class SimpleSampleActivity extends Activity {
             }
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(progress, progress);
+                params.gravity = Gravity.CENTER;
+                mIconButton.setLayoutParams(params);
+                mIconButton.postInvalidate();
 //                mIconicFontDrawable.setIconSize(progress);
                 mCurSizeTextView.setText("Size: " + progress);
             }
