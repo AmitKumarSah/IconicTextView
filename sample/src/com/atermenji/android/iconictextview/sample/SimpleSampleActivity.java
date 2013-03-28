@@ -108,12 +108,12 @@ public class SimpleSampleActivity extends Activity {
             }
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(progress, progress);
-                params.gravity = Gravity.CENTER;
-                mIconButton.setLayoutParams(params);
-                mIconButton.postInvalidate();
+//                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(progress, progress);
+//                params.gravity = Gravity.CENTER;
+//                mIconButton.setLayoutParams(params);
+//                mIconButton.postInvalidate();
 //                mIconicFontDrawable.setIconSize(progress);
-                mCurSizeTextView.setText("Size: " + progress);
+//                mCurSizeTextView.setText("Size: " + progress);
             }
         });
         
