@@ -16,6 +16,10 @@ public class IconicFontDrawable extends Drawable {
     private Paint mPaint;
     private Paint mStrokePaint;
 
+    private Rect mPaddingBounds;
+
+    private int mIconPadding;
+
     private Icon mIcon;
     private char[] mIconUtfChars;
 
@@ -24,6 +28,7 @@ public class IconicFontDrawable extends Drawable {
     public IconicFontDrawable(Context context) {
         mContext = context.getApplicationContext();
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaddingBounds = new Rect();
     }
     
     public IconicFontDrawable(Context context, Icon icon) {
@@ -42,7 +47,6 @@ public class IconicFontDrawable extends Drawable {
         mStrokePaint.setStyle(Paint.Style.STROKE);
         mStrokePaint.setStrokeWidth(10);
         mStrokePaint.setColor(strokeColor);
-        mStrokePaint.setTextAlign(Paint.Align.CENTER);
     }
     
     public void drawStroke(boolean drawStroke) {
@@ -60,9 +64,27 @@ public class IconicFontDrawable extends Drawable {
         invalidateSelf();
     }
 
+    public void setIconPadding(final int iconPadding) {
+        mIconPadding = iconPadding;
+        invalidateSelf();
+    }
+
     private void drawWithPath(Canvas canvas) {
 
         Rect bounds = getBounds();
+
+        if (!(mPaddingBounds.width() > 0)) {
+            mPaddingBounds.set(bounds);
+        }
+
+        if (mIconPadding >= 0 && !(mIconPadding * 2 > bounds.width()) && !(mIconPadding * 2 > bounds.height())) {
+            Log.v(TAG, "padding = " + mIconPadding);
+            mPaddingBounds.set(bounds.left + mIconPadding,
+                    bounds.top + mIconPadding,
+                    bounds.right - mIconPadding,
+                    bounds.bottom - mIconPadding);
+        }
+
         float textSize = (float) bounds.height() * 2;
 
         Log.v(TAG, "initial text size = " + textSize);
@@ -79,13 +101,17 @@ public class IconicFontDrawable extends Drawable {
                 " bottom = " + bounds.bottom + " top = " + bounds.top + " ; witdh = "
                 + bounds.width() + " , height = " + bounds.height());
 
+        Log.v(TAG, "padding bounds : left =  " + mPaddingBounds.left + " right = " + mPaddingBounds.right +
+                " bottom = " + mPaddingBounds.bottom + " top = " + mPaddingBounds.top + " ; witdh = "
+                + mPaddingBounds.width() + " , height = " + mPaddingBounds.height());
+
         Log.v(TAG, "Text bounds before : left =  " + pathBounds.left + " right = " + pathBounds.right +
                 " bottom = " + pathBounds.bottom + " top = " + pathBounds.top + " ; witdh = "
                 + pathBounds.width() + " , height = " + pathBounds.height());
 
         // calculate text size
-        float deltaWidth = ((float) bounds.width() / (float) pathBounds.width());
-        float deltaHeight = ((float) bounds.height() / (float) pathBounds.height());
+        float deltaWidth = ((float) mPaddingBounds.width() / pathBounds.width());
+        float deltaHeight = ((float) mPaddingBounds.height() / pathBounds.height());
         float delta = (deltaWidth < deltaHeight) ? deltaWidth : deltaHeight;
         textSize *= delta;
 
